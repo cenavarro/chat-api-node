@@ -1,0 +1,25 @@
+{
+  "name": "chat-node-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "node test/runMocha"
+  },
+  "author": "Cesar Navarro",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^0.8.5",
+    "bunyan": "^1.5.1",
+    "dotenv": "^1.2.0",
+    "jsonwebtoken": "^5.4.1",
+    "mongoose": "^4.2.6",
+    "restify": "^4.0.3",
+    "restify-bunyan-logger": "^2.0.7"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4",
+    "supertest": "^1.1.0"
+  }
+}
