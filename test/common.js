@@ -6,3 +6,4 @@ global.app = require('../app');
 global.agent = request.agent(app);
 global.User = require('../models/user');
 global.Message = require('../models/message');
+global.serverPath = 'http://localhost:' + process.env.PORT;

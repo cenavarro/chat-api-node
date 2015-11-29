@@ -27,7 +27,7 @@ describe('Messages Controller', function() {
         message.save();
 
         agent.get('/api/messages')
-          .set('x-access-token', utils.adminToken)
+          .set('access-token', utils.adminToken)
           .end(function(err, res){
             expect(err).to.not.exist;
             expect(res.statusCode).to.equal(200);

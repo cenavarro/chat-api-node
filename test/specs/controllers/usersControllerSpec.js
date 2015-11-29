@@ -21,7 +21,7 @@ describe('Users Controller', function() {
         user.save();
 
         agent.get('/api/admin/users')
-          .set('x-access-token', utils.adminToken)
+          .set('access-token', utils.adminToken)
           .end(function(err, res){
             expect(err).to.not.exist;
             expect(res.statusCode).to.equal(200);
@@ -36,7 +36,7 @@ describe('Users Controller', function() {
     describe("when attributes are not valid", function() {
       it("returns correct status code", function(done) {
         agent.post('/api/admin/users')
-          .set('x-access-token', utils.adminToken)
+          .set('access-token', utils.adminToken)
           .field("otherField", "value")
           .expect(422)
           .end(done);
@@ -49,7 +49,7 @@ describe('Users Controller', function() {
         user.save();
 
         agent.post('/api/admin/users')
-          .set('x-access-token', utils.adminToken)
+          .set('access-token', utils.adminToken)
           .field("email", user.email)
           .expect(500)
           .end(done);
@@ -61,7 +61,7 @@ describe('Users Controller', function() {
 
       it("returns correct status code", function(done) {
         agent.post('/api/admin/users')
-          .set('x-access-token', utils.adminToken)
+          .set('access-token', utils.adminToken)
           .field('email', newUser.email)
           .field('password', newUser.password)
           .expect(201)
@@ -70,7 +70,7 @@ describe('Users Controller', function() {
 
       it("returns the created user", function(done) {
         agent.post('/api/admin/users')
-          .set('x-access-token', utils.adminToken)
+          .set('access-token', utils.adminToken)
           .field('email', newUser.email)
           .field('password', newUser.password)
           .end(function(err, res) {
@@ -94,7 +94,7 @@ describe('Users Controller', function() {
     describe("when user exists", function() {
       it("deletes the user", function(done){
         agent.del('/api/admin/users/' + user._id)
-          .set('x-access-token', utils.adminToken)
+          .set('access-token', utils.adminToken)
           .end(function(err, res) {
             User.find({}, function(err, users) {
               expect(res.status).to.equal(200);
@@ -108,7 +108,7 @@ describe('Users Controller', function() {
     describe("when user doesn't exist", function() {
       it("return correct status code", function(done) {
         agent.del('/api/admin/users/4')
-          .set('x-access-token', utils.adminToken)
+          .set('access-token', utils.adminToken)
           .expect(500)
           .end(done);
       })

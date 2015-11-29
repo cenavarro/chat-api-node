@@ -2,7 +2,7 @@
 var jwt = require('jsonwebtoken');
 
 module.exports = function(req, res, next) {
-  var token = req.headers['x-access-token'];
+  var token = req.headers['access-token'];
   var nonSecurePaths = ['/api/authenticate', '/api/setup'];
 
   if(nonSecurePaths.indexOf(req.url) > -1) {

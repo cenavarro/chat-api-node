@@ -32,6 +32,7 @@ var usersController = require('./controllers/usersController')(User);
 var sessionsController = require('./controllers/sessionsController')(User);
 var messagesController = require('./controllers/messagesController')(Message);
 var routesAuthenticator = require('./middlewares/routesAuthenticator');
+var chat = require('./lib/chat')(server);
 
 mongoose.connect(dbURL);
 server.use(restify.acceptParser(server.acceptable));
@@ -45,12 +46,13 @@ server.pre(function (request, response, next) {
       url: request.url,
       headers: {
         host: request.headers.host,
-        token: request.headers["x-access-token"]
+        token: request.headers["access-token"]
       }
     }}, 'REQUEST');
   }
   next();
 });
+chat.start();
 
 // ======
 // Routes
