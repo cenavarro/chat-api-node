@@ -27,8 +27,10 @@ dotenv.load();
 
 var dbURL = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || process.env.MONGO_URL;
 var User = require('./models/user');
+var Message = require('./models/message');
 var usersController = require('./controllers/usersController')(User);
 var sessionsController = require('./controllers/sessionsController')(User);
+var messagesController = require('./controllers/messagesController')(Message);
 var routesAuthenticator = require('./middlewares/routesAuthenticator');
 
 mongoose.connect(dbURL);
@@ -57,6 +59,7 @@ server.post('/api/authenticate', sessionsController.authenticate);
 server.get('/api/admin/users', usersController.list);
 server.post('/api/admin/users', usersController.create);
 server.del('/api/admin/users/:id', usersController.remove);
+server.get('/api/messages', messagesController.list);
 server.post('/api/setup', function(req, res, next){
   User.findOne({
     email: process.env.ADMIN_EMAIL
