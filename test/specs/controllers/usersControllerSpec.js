@@ -38,7 +38,7 @@ describe('Users Controller', function() {
         agent.post('/api/admin/users')
           .set('x-access-token', utils.adminToken)
           .field("otherField", "value")
-          .expect(500)
+          .expect(422)
           .end(done);
       });
     });
