@@ -62,26 +62,7 @@ server.get('/api/admin/users', usersController.list);
 server.post('/api/admin/users', usersController.create);
 server.del('/api/admin/users/:id', usersController.remove);
 server.get('/api/messages', messagesController.list);
-server.post('/api/setup', function(req, res, next){
-  User.findOne({
-    email: process.env.ADMIN_EMAIL
-  }, function(err, user){
-    if(!user) {
-      bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(process.env.ADMIN_PWD, salt, function(err, password) {
-          var user = new User({
-            email: process.env.ADMIN_EMAIL,
-            password: password,
-            admin: true
-          });
-          user.save();
-        });
-      });
-    }
-    res.status(201)
-    res.send('Admin user created!');
-  });
-});
+server.post('/api/setup', usersController.setup);
 
 server.listen(process.env.PORT, function () {
   console.log('%s listening at %s', server.name, server.url);

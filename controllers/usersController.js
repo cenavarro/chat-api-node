@@ -27,10 +27,10 @@ var usersController = function(User) {
               });
               user.save(function(err) {
                 if(err) {
-                  res.status(422)
+                  res.status(422);
                   res.send({ message: err.toString() });
                 } else {
-                  res.status(201)
+                  res.status(201);
                   res.send(user);
                 }
               });
@@ -60,13 +60,35 @@ var usersController = function(User) {
         });
       }
     });
+  };
 
+  var setup = function(req, res) {
+    User.findOne({
+      email: process.env.ADMIN_EMAIL
+    }, function(err, user) {
+      if(!user) {
+        bcrypt.genSalt(10, function(err, salt) {
+          bcrypt.hash(process.env.ADMIN_PWD, salt, function(err, password) {
+            var user = new User({
+              username: 'admin',
+              email: process.env.ADMIN_EMAIL,
+              password: password,
+              admin: true
+            });
+            user.save();
+          });
+        });
+      }
+      res.status(201);
+      res.send('Admin user created!');
+    });
   };
 
   return {
     list: list,
     create: create,
-    remove: remove
+    remove: remove,
+    setup: setup
   }
 };
 

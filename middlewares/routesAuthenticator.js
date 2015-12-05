@@ -11,17 +11,14 @@ module.exports = function(req, res, next) {
     if(token) {
       jwt.verify(token, process.env.TOKEN_SECRET, function(err, user) {
         if(err) {
-          res.json({ success: false, message: 'Failed to authenticate token.', error: err });
+          res.json({ message: 'Failed to authenticate token.', error: err });
         } else if(req.url.indexOf("/api/admin/") === 0) {
           if(user.admin) {
             req.user = user;
             next();
           } else {
-            res.status(403)
-            res.send({
-              success: false,
-              message: 'Not authorized.'
-            })
+            res.status(403);
+            res.send({ message: 'Not authorized.' });
           }
         } else {
           req.user = user;
@@ -29,11 +26,8 @@ module.exports = function(req, res, next) {
         }
       })
     } else {
-      res.status(403)
-      res.send({
-        success: false,
-        message: 'No token provided.'
-      })
+      res.status(403);
+      res.send({ message: 'No token provided.' });
     }
   }
 };
