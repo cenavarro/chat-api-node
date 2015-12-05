@@ -17,7 +17,7 @@ describe('Users Controller', function() {
 
     describe("when authorized", function() {
       it("returns all users", function(done) {
-        user = new User({ email: "user@email.com", password: "password" });
+        user = new User({ username: "user1", email: "user@email.com", password: "password" });
         user.save();
 
         agent.get('/api/admin/users')
@@ -26,6 +26,7 @@ describe('Users Controller', function() {
             expect(err).to.not.exist;
             expect(res.statusCode).to.equal(200);
             expect(res.body[0].email).to.equal(user.email);
+            expect(res.body[0].username).to.equal(user.username);
             done();
           });
       });
@@ -45,7 +46,7 @@ describe('Users Controller', function() {
 
     describe("when user exists", function() {
       it("returns correct status code", function(done) {
-        user = new User({ email: "user@email.com", password: "password" });
+        user = new User({ username: "user1", email: "user@email.com", password: "password" });
         user.save();
 
         agent.post('/api/admin/users')
@@ -57,11 +58,12 @@ describe('Users Controller', function() {
     });
 
     describe("when user doesn't exist", function() {
-      var newUser = { email: "test@example.com", password: "password" };
+      var newUser = { username: "user1", email: "user@email.com", password: "password" };
 
       it("returns correct status code", function(done) {
         agent.post('/api/admin/users')
           .set('access-token', utils.adminToken)
+          .field('username', newUser.username)
           .field('email', newUser.email)
           .field('password', newUser.password)
           .expect(201)
@@ -71,6 +73,7 @@ describe('Users Controller', function() {
       it("returns the created user", function(done) {
         agent.post('/api/admin/users')
           .set('access-token', utils.adminToken)
+          .field('username', newUser.username)
           .field('email', newUser.email)
           .field('password', newUser.password)
           .end(function(err, res) {
@@ -86,7 +89,7 @@ describe('Users Controller', function() {
     var user;
 
     beforeEach(function(done) {
-      user = new User({ email: "user@email.com", password: "password" });
+      user = new User({ username: "user1", email: "user@email.com", password: "password" });
       user.save();
       done();
     });

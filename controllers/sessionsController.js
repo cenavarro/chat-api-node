@@ -16,7 +16,7 @@ var sessionsController = function(User) {
         } else if(user) {
           bcrypt.compare(req.body.password, user.password, function(err, result){
             if(result) {
-              var temporalUser = { _id: user._id, email: user.email, admin: user.admin };
+              var temporalUser = { _id: user._id, username: user.username, email: user.email, admin: user.admin };
               var token = jwt.sign(temporalUser, process.env.TOKEN_SECRET);
 
               res.json({

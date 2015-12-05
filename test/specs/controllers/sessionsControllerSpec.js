@@ -15,12 +15,12 @@ describe('Sessions Controller', function() {
       var user;
 
       beforeEach(function(done) {
-        user = new User({ email: "user@email.com", password: utils.generatePassword("password") });
+        user = new User({ username: 'user1', email: "user@email.com", password: utils.generatePassword("password") });
         user.save();
         done();
       });
 
-      describe("when email and password doesn't match", function() {
+      describe("when email and password don't match", function() {
         it("returns correct status code", function(done) {
           agent.post('/api/authenticate')
             .field('email', "user@email.com")
@@ -30,7 +30,7 @@ describe('Sessions Controller', function() {
         });
       });
 
-      describe("when email and password matches", function() {
+      describe("when email and password match", function() {
         it("returns correct status code", function(done) {
           agent.post('/api/authenticate')
             .field('email', "user@email.com")

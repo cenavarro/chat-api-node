@@ -29,8 +29,8 @@ describe('Chat', function() {
     it("broadcasts new user connection", function (done) {
       client1 = io(serverPath, optionsClient1),
 
-      client1.on('user connected', function(email) {
-        expect(email).to.equal("user@example.com");
+      client1.on('user connected', function(username) {
+        expect(username).to.equal("user1");
         done();
       });
 
@@ -53,8 +53,8 @@ describe('Chat', function() {
       client1 = io(serverPath, optionsClient1);
       client2 = io(serverPath, optionsClient2);
 
-      client1.on('user disconnected', function(email) {
-        expect(email).to.equal("user@example.com");
+      client1.on('user disconnected', function(username) {
+        expect(username).to.equal("user1");
         done();
       });
 

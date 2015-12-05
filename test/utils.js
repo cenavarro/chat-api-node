@@ -2,9 +2,9 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 
 module.exports = {
-  adminToken: jwt.sign({ email: "admin@example.com", admin: true }, process.env.TOKEN_SECRET),
+  adminToken: jwt.sign({ username: 'admin', email: "admin@example.com", admin: true }, process.env.TOKEN_SECRET),
   userToken: function(email) {
-    return jwt.sign({ email: email }, process.env.TOKEN_SECRET);
+    return jwt.sign({ username: 'user1', email: email }, process.env.TOKEN_SECRET);
   },
   generatePassword: function(password) {
     var salt = bcrypt.genSaltSync(10);

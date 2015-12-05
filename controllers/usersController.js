@@ -21,6 +21,7 @@ var usersController = function(User) {
           bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(attributes.password, salt, function(err, password) {
               var user = new User({
+                username: attributes.username,
                 email: attributes.email,
                 password: password
               });
